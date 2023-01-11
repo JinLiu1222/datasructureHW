@@ -1,0 +1,99 @@
+class Node:
+    def __init__(self,key=None,next=None):
+       self.key=key
+       self.next=next
+class BinaryTree:
+    def __init__(self):
+        self.root = None
+    def parentNode(self, i):
+        if i == 0:
+            return None
+        return (i - 1) // 2
+    def lchild(self, i):
+        return 2 * i + 1
+    def rchild(self, i):
+        return 2 * i + 2
+ class MinPriorityQueue:
+    def __init__(self):
+        self.queue = []
+def __len__(self):
+    return len(self.queue)
+def insert(self, key):
+    self.queue.append(key)
+    self.heapify_up(len(self.queue) - 1)
+def delMin(self):
+    if len(self.queue) == 0:
+        return None
+    self.queue[0], self.queue[len(self.queue) - 1] = self.queue[len(self.queue) - 1], self.queue[0]
+    min = self.queue.pop()
+    self.heapify_down(0)
+    return min
+def heapify_up(self, index):
+    if index == 0:
+        return
+    parent = BinaryTree().parentNode(index)
+    if self.queue[index] < self.queue[parent]:
+        self.queue[index], self.queue[parent] = self.queue[parent], self.queue[index]
+        self.heapify_up(parent)
+def heapify_down(self, index):
+    lchild = BinaryTree().lchild(index)
+    rchild = BinaryTree().rchild(index)
+    if lchild >= len(self.queue):
+        return
+    smallest_index = index
+    if self.queue[lchild] < self.queue[smallest_index]:
+        smallest_index = lchild
+    if rchild < len(self.queue) and self.queue[rchild] < self.queue[smallest_index]:
+        smallest_index = rchild
+    if smallest_index != index:
+        self.queue[index], self.queue[smallest_index] = self.queue[smallest_index], self.queue[index]
+        self.heapify_down(smallest_index)    
+ import time
+import matplotlib.pyplot as plt
+import warnings
+warnings.filterwarnings("ignore")
+plt.rcParams['font.sans-serif'] = ['SimHei']
+plt.rcParams['axes.unicode_minus'] = False
+nums = [500, 1000, 1500, 2000, 2500,3000,3500,4000,4500,5000]
+insert_time = []
+delete_time = []
+for num in nums:
+    start_time = time.time()
+    min_prior = MinPriorityQueue()
+    for i in range(num):
+        min_prior.insert(i)
+    end_time = time.time()
+    insert_time.append(end_time - start_time)
+    start_time = time.time()
+    for i in range(num):
+        min_prior.delMin()
+    end_time = time.time()
+    delete_time.append(end_time - start_time)
+plt.plot(nums, insert_time, label="insert time")
+plt.plot(nums, delete_time, label="delete time")
+plt.xlabel("Number of inserted elements")
+plt.ylabel("Running time(s)")
+plt.title("Bifurcated Heap Performance Test")
+plt.legend()
+plt.show()
+from graphviz import Digraph
+elements=[12,3,47,4,5,94,30,16,15]
+min_prior = MinPriorityQueue()
+for i in elements:
+    min_prior.insert(i)
+print(min_prior.queue)
+dot = Digraph()
+data=min_prior.queue
+for i in data:
+    dot.node(str(i),str(i))
+dot.edges([
+    (str(data[0]),str(data[1])),
+    (str(data[0]),str(data[2])),
+    (str(data[1]),str(data[3])),
+    (str(data[1]),str(data[4])),
+    (str(data[2]),str(data[5])),
+    (str(data[2]),str(data[6])),
+    (str(data[3]),str(data[7])),
+    (str(data[3]),str(data[8]))
+           ])
+dot.render(r'C:\Users\pc\Desktop\binary_tree')
